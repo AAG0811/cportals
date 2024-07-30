@@ -6,6 +6,34 @@
 #include <sstream>
 #include <string>
 
+typedef struct T_Matrix4f
+{
+  float values[4][4] = {
+      {0, 0, 0, 0},
+      {0, 0, 0, 0},
+      {0, 0, 0, 0},
+      {0, 0, 0, 0}};
+};
+T_Matrix4f createMat4f(float value)
+{
+  T_Matrix4f matrix;
+  matrix.values[0][0] = 1;
+  matrix.values[1][1] = 1;
+  matrix.values[2][2] = 1;
+  matrix.values[3][3] = 1;
+  return matrix;
+}
+void printMat4f(T_Matrix4f *mat)
+{
+  for (int i = 0; i < 4; i++)
+  {
+    for (int j = 0; j < 4; j++)
+    {
+      std::cout << mat->values[i][j];
+    }
+  }
+}
+
 void createShaderProg(unsigned int *shaderProg, const char *vsSource, const char *fsSource);
 void checkCompileErrors(unsigned int shader, std::string type);
 
@@ -42,6 +70,9 @@ int main()
   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
   glEnableVertexAttribArray(0);
 
+  T_Matrix4f mymat = createMat4f(1.0f);
+  printMat4f(&mymat);
+  glUniformMatrix4fv("loc", 1, GL_FALSE, &mymat.values[0]);
   while (!glfwWindowShouldClose(window))
   {
     glfwPollEvents();
