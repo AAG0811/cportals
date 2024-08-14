@@ -8,7 +8,7 @@ set(glfw3_DIR "C:/Program Files (x86)/GLFW/lib/cmake/glfw3")
 endif()
 find_package(glfw3 3.4 REQUIRED)
 
-set(SOURCES main.cpp glad.c shader.h camera.h stb_image.h)
+set(SOURCES main.cpp glad.c shader.h camera.h stb_image.h mesh.h model.h)
 add_executable(${CMAKE_PROJECT_NAME} ${SOURCES})
 target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/include)
 target_link_libraries(${CMAKE_PROJECT_NAME} PUBLIC glfw)
