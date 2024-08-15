@@ -34,6 +34,7 @@ float lastFrame = 0.0f;
 
 int main()
 {
+  camera.FPSCam = true;
   // glfw: initialize and configure
   // ------------------------------
   glfwInit();
@@ -239,6 +240,13 @@ int main()
       "../assets/skybox/bottom.jpg",
       "../assets/skybox/front.jpg",
       "../assets/skybox/back.jpg"};
+  vector<std::string> facesb{
+      "../assets/skyboxb/right.png",
+      "../assets/skyboxb/left.png",
+      "../assets/skyboxb/top.png",
+      "../assets/skyboxb/bottom.png",
+      "../assets/skyboxb/front.png",
+      "../assets/skyboxb/back.png"};
   unsigned int cubemapTexture = loadCubemap(faces);
 
   // load textures
@@ -286,9 +294,9 @@ int main()
 
   float trivertices[] = {
       // pos          // tex
-      -0.5, -0.5, 0.0, 0.0, 0.0, // left
+      0.5, -0.5, 0.0, 1.0, 0.0,  // right
       0.0, 0.5, 0.0, 0.5, 1.0,   // top
-      0.5, -0.5, 0.0, 1.0, 0.0   // right
+      -0.5, -0.5, 0.0, 0.0, 0.0, // left
   };
   unsigned int VBO, VAO;
   glGenVertexArrays(1, &VAO);
@@ -318,7 +326,6 @@ int main()
     processInput(window);
     // render
     // ------
-
     shader.use();
     glm::mat4 model = glm::mat4(1.0f);
     glm::mat4 view = camera.GetViewMatrix();
@@ -438,6 +445,10 @@ void processInput(GLFWwindow *window)
     camera.ProcessKeyboard(LEFT, deltaTime);
   if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
     camera.ProcessKeyboard(RIGHT, deltaTime);
+  if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
+    camera.ProcessKeyboard(UP, deltaTime);
+  if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+    camera.ProcessKeyboard(DOWN, deltaTime);
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
